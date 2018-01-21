@@ -1,0 +1,38 @@
+diff --git a/tests/sanity_test.py b/tests/sanity_test.py
+index 076d9d6..f5c8f99 100755
+--- a/tests/sanity_test.py
++++ b/tests/sanity_test.py
+@@ -52,27 +52,27 @@ def compare_unbounded(student_out, reference_out):
+       break
+     if create:
+       new.write(line1)
+-    m = re.match(line2, line1)
++    m = re.match(line2.encode('ascii'), line1)
+     if m == None or m.start() != 0 or m.end() != len(line2):
+       passed = False
+   return passed
+ 
+ 
+ def run_tests(tests):
+-  print "Testing files..."
++  print("Testing files...")
+   tests_passed = 0
+   tests_failed = 0
+ 
+   for description,test in tests:
+     test_passed, reason = test()
+     if test_passed:
+-      print "\tPASSED test: %s" % description
++      print("\tPASSED test: %s" % description)
+       tests_passed += 1
+     else:
+-      print "\tFAILED test: %s (%s)" % (description, reason)
++      print("\tFAILED test: %s (%s)" % (description, reason))
+       tests_failed += 1
+-  
+-  print "Passed %d/%d tests" % (tests_passed, (tests_passed + tests_failed))
++
++  print("Passed %d/%d tests" % (tests_passed, (tests_passed + tests_failed)))
+ 
+ tests = [
+   ("ALU add test",TestCase(os.path.join(file_locations,'alu-add.circ'), os.path.join(file_locations,'reference_output/alu-add.out'), "Reference columns are Test #, Equals Output, Result1")),
